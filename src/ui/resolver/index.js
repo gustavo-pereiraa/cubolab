@@ -5,7 +5,9 @@ import { validateState } from '../../cube/validate.js';
 import { solveBeginner } from '../../solver/beginner/index.js';
 import { preloadKociemba, solveShortest } from '../../solver/kociemba.js';
 import { createCubeView } from '../../three/scene.js';
+import { classifyStickers } from '../../vision/classify.js';
 import { h } from '../dom.js';
+import { createCameraReader } from './cameraReader.js';
 import { createMethodPanel } from './methodPanel.js';
 import { createNetEditor } from './netEditor.js';
 import { createPlayer } from './player.js';
@@ -72,6 +74,13 @@ export function initResolver() {
     const hidden = errors.length - items.length;
     if (hidden > 0) items.push(h('li', {}, `E mais ${hidden} ${hidden === 1 ? 'problema' : 'problemas'}.`));
     feedback.replaceChildren(h('ul', {}, ...items));
+    feedback.classList.remove('feedback--info');
+    feedback.hidden = false;
+  }
+
+  function showInfo(message) {
+    feedback.replaceChildren(h('p', {}, message));
+    feedback.classList.add('feedback--info');
     feedback.hidden = false;
   }
 
@@ -114,12 +123,41 @@ export function initResolver() {
     },
   });
 
-  scrambleButton.addEventListener('click', () => {
+  function setCube(state) {
     resetSolution();
-    const state = applySequence(createSolvedState(), generateScramble());
     editor.setState(state);
     view.setState(state);
+  }
+
+  scrambleButton.addEventListener('click', () => {
+    setCube(applySequence(createSolvedState(), generateScramble()));
   });
+
+  const cameraReader = createCameraReader({
+    elements: {
+      dialog: byId('camera-dialog'),
+      viewer: byId('camera-viewer'),
+      video: byId('camera-video'),
+      instruction: byId('camera-instruction'),
+      status: byId('camera-status'),
+      faces: byId('camera-faces'),
+      capture: byId('camera-capture'),
+      finish: byId('camera-finish'),
+      cancel: byId('camera-cancel'),
+    },
+    onComplete(samples) {
+      const { state, uncertain } = classifyStickers(samples);
+      setCube(state);
+      editor.markUncertain(uncertain);
+      showInfo(
+        uncertain.length > 0
+          ? `Leitura concluída. Confira as cores, principalmente os ${uncertain.length} quadradinhos tracejados, e corrija o que estiver errado.`
+          : 'Leitura concluída. Confira as cores e corrija o que estiver errado antes de resolver.',
+      );
+    },
+  });
+
+  byId('camera-button').addEventListener('click', () => cameraReader.open());
 
   solveButton.addEventListener('click', async () => {
     const state = editor.getState();

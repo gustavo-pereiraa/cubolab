@@ -55,7 +55,7 @@
           <div class="palette" id="palette" role="group" aria-label="Cor para pintar"></div>
           <div class="resolver-actions">
             <button class="btn btn--secondary" type="button" id="scramble-button">Embaralhar</button>
-            <button class="btn btn--secondary" type="button" disabled title="Disponível em breve">Ler pela câmera</button>
+            <button class="btn btn--secondary" type="button" id="camera-button">Ler pela câmera</button>
             <button class="btn btn--primary" type="button" id="solve-button">Resolver meu cubo</button>
           </div>
           <div class="feedback" id="solve-feedback" role="alert" hidden></div>
@@ -139,6 +139,25 @@
         </article>
       </section>
     </main>
+
+    <dialog class="camera-dialog" id="camera-dialog" aria-labelledby="camera-title">
+      <h2 class="card__title" id="camera-title">Ler o cubo pela câmera</h2>
+      <p class="camera-instruction" id="camera-instruction" aria-live="polite"></p>
+      <div class="camera-viewer" id="camera-viewer">
+        <video id="camera-video" autoplay muted playsinline></video>
+        <div class="camera-guide" aria-hidden="true">
+          <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+        </div>
+      </div>
+      <p class="feedback" id="camera-status" role="alert" hidden></p>
+      <p class="card__placeholder camera-tip">Encaixe a face na grade, com luz uniforme e sem reflexos. As imagens não saem do seu navegador.</p>
+      <ol class="read-faces" id="camera-faces" aria-label="Faces do cubo; escolha uma para ler de novo"></ol>
+      <div class="camera-actions">
+        <button class="btn btn--secondary" type="button" id="camera-cancel">Cancelar</button>
+        <button class="btn btn--primary" type="button" id="camera-capture">Capturar face</button>
+        <button class="btn btn--primary" type="button" id="camera-finish" hidden>Concluir leitura</button>
+      </div>
+    </dialog>
 
     <script type="module" src="/src/main.js"></script>
   </body>

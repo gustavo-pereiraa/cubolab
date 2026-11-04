@@ -75,6 +75,12 @@
   box-shadow: inset 0 0 0 4px var(--bg); /* separa o contorno de adesivos também laranja */
 }
 
+.sticker.is-uncertain {
+  z-index: 1;
+  outline: 2px dashed var(--text);
+  outline-offset: -1px;
+}
+
 /* Paleta */
 .palette {
   display: grid;
@@ -162,6 +168,132 @@
   margin: 0;
   padding: 0;
   list-style: none;
+}
+
+.feedback--info {
+  background: #58a6ff1a;
+  border-color: var(--accent);
+}
+
+/* Leitura pela câmera */
+.camera-dialog {
+  width: min(560px, calc(100vw - 32px));
+  max-height: calc(100dvh - 32px);
+  padding: 20px;
+  overflow-y: auto;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  color: var(--text);
+}
+
+.camera-dialog::backdrop {
+  background: #05090fcc;
+}
+
+.camera-instruction {
+  min-height: 3em;
+  color: var(--text-secondary);
+}
+
+.camera-viewer {
+  position: relative;
+  width: min(100%, 50dvh);
+  aspect-ratio: 1;
+  margin: 8px auto 0;
+  overflow: hidden;
+  background: #05090f;
+  border-radius: var(--radius-button);
+}
+
+.camera-viewer video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.camera-viewer.is-mirrored video {
+  transform: scaleX(-1);
+}
+
+/* O tamanho de 70% precisa combinar com GUIDE_RATIO em src/vision/sampling.js. */
+.camera-guide {
+  position: absolute;
+  inset: 15%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border: 2px solid #ffffff;
+  border-radius: 6px;
+  box-shadow: 0 0 0 100vmax #05090f66;
+}
+
+.camera-guide i {
+  border: 1px solid #ffffffb3;
+}
+
+.camera-tip {
+  margin-top: 8px;
+}
+
+.read-faces {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 6px;
+  margin: 12px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.read-face {
+  display: grid;
+  justify-items: center;
+  gap: 4px;
+  width: 100%;
+  min-height: var(--target-min);
+  padding: 6px 2px;
+  background: var(--button-secondary);
+  border: 1px solid var(--button-secondary-border);
+  border-radius: var(--radius-button);
+  color: var(--text-secondary);
+  font-size: 0.6875rem;
+  cursor: pointer;
+}
+
+@media (max-width: 599px) {
+  .read-faces {
+    gap: 4px;
+  }
+
+  .read-face {
+    font-size: 0.5625rem;
+  }
+}
+
+.read-face.is-current {
+  border-color: var(--accent);
+  box-shadow: inset 0 0 0 1px var(--accent);
+}
+
+.read-face__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 8px);
+  gap: 1px;
+}
+
+.read-face__grid i {
+  width: 8px;
+  height: 8px;
+  background: var(--border);
+  border-radius: 1px;
+}
+
+.camera-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 16px;
 }
 
 /* Cubo 3D */

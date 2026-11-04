@@ -43,7 +43,15 @@ export function createNetEditor({ netRoot, paletteRoot, onChange }) {
     }
   }
 
+  /** Marca adesivos com leitura duvidosa; a marca some quando a pessoa pinta o adesivo. */
+  function markUncertain(indices) {
+    for (const [index, button] of stickerButtons) {
+      button.classList.toggle('is-uncertain', indices.includes(index));
+    }
+  }
+
   function paint(index) {
+    stickerButtons.get(index).classList.remove('is-uncertain');
     if (state[index] === selectedColor) return;
     state = state.with(index, selectedColor);
     renderSticker(index);
@@ -101,9 +109,10 @@ export function createNetEditor({ netRoot, paletteRoot, onChange }) {
     state.forEach((_, index) => renderSticker(index));
     renderPalette();
     highlight([]);
+    markUncertain([]);
   }
 
   setState(state);
 
-  return { getState: () => state, setState, highlight };
+  return { getState: () => state, setState, highlight, markUncertain };
 }
