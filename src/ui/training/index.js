@@ -3,6 +3,7 @@ import { generateScramble } from '../../cube/scramble.js';
 import { solvesToCsv } from '../../stats/csv.js';
 import { formatSolve } from '../../stats/format.js';
 import { summarize } from '../../stats/metrics.js';
+import { generateSampleSolves, isSampleSolve } from '../../stats/sampleData.js';
 import { createSolveStore } from '../../stats/storage.js';
 import { createEvolutionChart } from './evolutionChart.js';
 import { renderSolvesTable } from './solvesTable.js';
@@ -65,7 +66,20 @@ export function initTraining() {
       },
     );
     renderLastSolve();
+    renderSampleBanner();
     byId('storage-warning').hidden = store.isPersistent();
+  }
+
+  /** Sem histórico, oferece dados de exemplo; com exemplos carregados, deixa claro que são fictícios. */
+  function renderSampleBanner() {
+    const solves = store.getAll();
+    const hasSamples = solves.some(isSampleSolve);
+    byId('sample-banner').hidden = solves.length > 0 && !hasSamples;
+    byId('sample-text').textContent = hasSamples
+      ? 'Você está vendo dados de exemplo, que não são resoluções reais.'
+      : 'Ainda não há resoluções. Quer ver como as estatísticas ficam com um histórico?';
+    byId('sample-load').hidden = hasSamples;
+    byId('sample-remove').hidden = !hasSamples;
   }
 
   function togglePenalty(penalty) {
@@ -95,6 +109,14 @@ export function initTraining() {
   plusTwo.addEventListener('click', () => togglePenalty('+2'));
   dnf.addEventListener('click', () => togglePenalty('DNF'));
   exportButton.addEventListener('click', () => downloadCsv(store.getAll()));
+  byId('sample-load').addEventListener('click', () => {
+    store.addAll(generateSampleSolves());
+    render();
+  });
+  byId('sample-remove').addEventListener('click', () => {
+    store.removeWhere(isSampleSolve);
+    render();
+  });
 
   // Depois de um clique, o foco sai do botão para a barra de espaço voltar a controlar o cronômetro.
   document.addEventListener('click', (event) => {

@@ -50,7 +50,7 @@
       <section class="panel panel--resolver" role="tabpanel" id="panel-resolver" aria-labelledby="tab-resolver" tabindex="0">
         <article class="card">
           <h2 class="card__title">1. Informe as cores do seu cubo</h2>
-          <p class="card__hint">Segure o cubo com amarelo em cima e verde na frente. Escolha uma cor e clique nos quadradinhos.</p>
+          <p class="card__hint">Segure o cubo com amarelo em cima e verde na frente. Escolha uma cor e clique nos quadradinhos (no teclado, use as setas e o Enter).</p>
           <div class="net" id="net"></div>
           <div class="palette" id="palette" role="group" aria-label="Cor para pintar"></div>
           <div class="resolver-actions">
@@ -69,7 +69,7 @@
             <p class="step-instruction" id="step-instruction"></p>
             <p class="step-move" id="step-move" hidden></p>
           </div>
-          <ol class="chips" id="move-chips" aria-label="Sequência de movimentos"></ol>
+          <ol class="chips" id="move-chips" aria-label="Sequência de movimentos" tabindex="0"></ol>
           <div class="player-controls">
             <div class="player-buttons">
               <button class="btn btn--secondary btn--icon" type="button" id="player-previous" aria-label="Movimento anterior">
@@ -132,6 +132,12 @@
       </section>
 
       <section class="panel panel--treino" role="tabpanel" id="panel-treino" aria-labelledby="tab-treino" tabindex="0" hidden>
+        <div class="sample-banner" id="sample-banner" hidden>
+          <p id="sample-text"></p>
+          <button class="btn btn--secondary" type="button" id="sample-load">Carregar dados de exemplo</button>
+          <button class="btn btn--secondary" type="button" id="sample-remove" hidden>Remover dados de exemplo</button>
+        </div>
+
         <article class="card timer-card">
           <h2 class="card__title">Cronômetro</h2>
           <div class="scramble-box">

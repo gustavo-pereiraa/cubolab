@@ -12,6 +12,7 @@ import {
   summarize,
 } from '../../src/stats/metrics.js';
 import { solvesToCsv } from '../../src/stats/csv.js';
+import { generateSampleSolves, isSampleSolve } from '../../src/stats/sampleData.js';
 
 const DAY = 24 * 60 * 60 * 1000;
 const NOW = Date.parse('2026-11-04T12:00:00.000Z');
@@ -350,6 +351,46 @@ describe('armazenamento', () => {
     store.add({ scramble: 'R', totalMs: 1000, splits: null });
     expect(store.getAll()).toHaveLength(1);
     expect(store.isPersistent()).toBe(false);
+  });
+});
+
+describe('dados de exemplo', () => {
+  function memoryStorage() {
+    const data = new Map();
+    return { getItem: (key) => data.get(key) ?? null, setItem: (key, value) => data.set(key, value) };
+  }
+
+  it('passam pela validação do armazenamento e ficam em ordem', () => {
+    const storage = memoryStorage();
+    const samples = generateSampleSolves(NOW);
+    createSolveStore(storage).addAll(samples);
+    expect(createSolveStore(storage).getAll()).toEqual(samples);
+  });
+
+  it('nunca ficam no futuro e têm parciais que somam o tempo total', () => {
+    for (const solve of generateSampleSolves(NOW)) {
+      expect(Date.parse(solve.date)).toBeLessThanOrEqual(NOW);
+      if (solve.splits) {
+        expect(Object.values(solve.splits).reduce((sum, part) => sum + part, 0)).toBe(solve.totalMs);
+        expect(solve.splits.lastLayer).toBeGreaterThan(0);
+      }
+    }
+  });
+
+  it('mostram evolução, com todos os cards preenchidos', () => {
+    const summary = summarize(generateSampleSolves(NOW), NOW);
+    expect(Number.isFinite(summary.ao5.value)).toBe(true);
+    expect(Number.isFinite(summary.ao12.value)).toBe(true);
+    expect(summary.ao5.change).toBeLessThan(0);
+    expect(stageBreakdown(generateSampleSolves(NOW)).slowestId).toBe('secondLayer');
+  });
+
+  it('podem ser removidos sem apagar as resoluções reais', () => {
+    const store = createSolveStore(memoryStorage());
+    store.addAll(generateSampleSolves(NOW));
+    const real = store.add({ scramble: 'R', totalMs: 1000, splits: null });
+    store.removeWhere(isSampleSolve);
+    expect(store.getAll()).toEqual([real]);
   });
 });
 

@@ -57,8 +57,18 @@ export function createSolveStore(storage = globalThis.localStorage) {
       return solve;
     },
 
+    addAll(list) {
+      solves = [...solves, ...list].sort(byDate);
+      save();
+    },
+
     remove(id) {
       solves = solves.filter((solve) => solve.id !== id);
+      save();
+    },
+
+    removeWhere(predicate) {
+      solves = solves.filter((solve) => !predicate(solve));
       save();
     },
 

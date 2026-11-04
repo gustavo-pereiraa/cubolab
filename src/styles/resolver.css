@@ -433,6 +433,7 @@
 .player-speed input {
   flex: 1;
   min-width: 60px;
+  height: var(--target-min);
   accent-color: var(--accent);
 }
 

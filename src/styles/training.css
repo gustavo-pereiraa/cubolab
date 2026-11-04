@@ -1,9 +1,24 @@
 .panel--treino {
   grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
   grid-template-areas:
+    'banner banner'
     'timer stats'
     'chart stages'
     'solves solves';
+}
+
+.sample-banner {
+  grid-area: banner;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 16px;
+  padding: 10px 16px;
+  background: #58a6ff1a;
+  border: 1px solid var(--accent);
+  border-radius: var(--radius-card);
+  font-size: 0.875rem;
 }
 
 .timer-card { grid-area: timer; }
@@ -339,6 +354,7 @@
   .panel--treino {
     grid-template-columns: minmax(0, 1fr);
     grid-template-areas:
+      'banner'
       'timer'
       'stats'
       'chart'

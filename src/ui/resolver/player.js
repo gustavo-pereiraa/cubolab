@@ -82,6 +82,9 @@ export function createPlayer({ view, elements, onProgress }) {
     });
     scrollCurrentChipIntoView();
 
+    // Durante a reprodução, anunciar cada movimento atropelaria o leitor de tela.
+    title.parentElement.setAttribute('aria-live', isPlaying ? 'off' : 'polite');
+
     previous.disabled = index === 0;
     next.disabled = index >= moves.length;
     playPause.disabled = moves.length === 0;
