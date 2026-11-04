@@ -133,7 +133,7 @@
 }
 
 .swatch.is-off-count .swatch__count {
-  color: #ff9a5c;
+  color: var(--warning-text);
   font-weight: 700;
 }
 

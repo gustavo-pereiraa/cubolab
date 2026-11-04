@@ -19,6 +19,8 @@
   --on-accent: #0b1220; /* branco sobre o azul não atinge o contraste mínimo */
   --success: #4cc38a;
   --warning: #f76b15;
+  --warning-text: #ff9a5c; /* o laranja acima não tem contraste suficiente para texto pequeno */
+  --chart-point: #6f7f95; /* validado contra o azul de destaque, inclusive para daltonismo */
 
   /* Cores do cubo */
   --cube-white: #f4f6f8;

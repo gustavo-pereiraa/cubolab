@@ -132,10 +132,100 @@
       </section>
 
       <section class="panel panel--treino" role="tabpanel" id="panel-treino" aria-labelledby="tab-treino" tabindex="0" hidden>
-        <article class="card">
+        <article class="card timer-card">
           <h2 class="card__title">Cronômetro</h2>
-          <p class="timer-preview" aria-hidden="true">0.00</p>
-          <p class="card__placeholder">O cronômetro e as estatísticas chegam na fase 5.</p>
+          <div class="scramble-box">
+            <div class="scramble-box__text">
+              <p class="scramble-box__label">Embaralhe com o branco em cima e o verde na frente</p>
+              <p class="scramble-box__moves" id="timer-scramble"></p>
+            </div>
+            <button class="btn btn--secondary" type="button" id="new-scramble">Novo</button>
+          </div>
+
+          <button class="timer-surface" type="button" id="timer-surface" data-state="idle" aria-describedby="timer-hint">
+            <span class="timer-surface__time" id="timer-display">0.00</span>
+            <span class="timer-surface__hint" id="timer-hint"></span>
+          </button>
+
+          <div class="timer-options">
+            <label class="timer-toggle">
+              <input type="checkbox" id="track-stages" />
+              Marcar etapas
+            </label>
+            <button class="btn btn--primary" type="button" id="mark-stage" hidden>Terminei a etapa</button>
+            <div class="last-solve" id="last-solve" hidden>
+              <span>Última: <strong class="mono" id="last-solve-time"></strong></span>
+              <button class="btn btn--secondary" type="button" id="penalty-plus2" aria-pressed="false" aria-label="Aplicar penalidade de 2 segundos">+2</button>
+              <button class="btn btn--secondary" type="button" id="penalty-dnf" aria-pressed="false" aria-label="Marcar como não concluída (DNF)">DNF</button>
+            </div>
+          </div>
+          <p class="sr-only" id="timer-status" aria-live="polite"></p>
+          <p class="storage-warning" id="storage-warning" hidden>
+            Seu navegador bloqueou o armazenamento: estas resoluções vão sumir ao fechar a página.
+          </p>
+        </article>
+
+        <div class="stat-grid">
+          <article class="card stat-card">
+            <h2 class="stat-card__label">Média de 5 <abbr title="descarta o melhor e o pior tempo">(ao5)</abbr></h2>
+            <p class="stat-card__value" id="stat-ao5"></p>
+            <p class="stat-card__change" id="stat-ao5-change"></p>
+          </article>
+          <article class="card stat-card">
+            <h2 class="stat-card__label">Média de 12 <abbr title="descarta o melhor e o pior tempo">(ao12)</abbr></h2>
+            <p class="stat-card__value" id="stat-ao12"></p>
+            <p class="stat-card__change" id="stat-ao12-change"></p>
+          </article>
+          <article class="card stat-card">
+            <h2 class="stat-card__label">Melhor tempo</h2>
+            <p class="stat-card__value" id="stat-best"></p>
+            <p class="stat-card__change" id="stat-best-change"></p>
+          </article>
+          <article class="card stat-card">
+            <h2 class="stat-card__label">Total de resoluções</h2>
+            <p class="stat-card__value" id="stat-total"></p>
+            <p class="stat-card__change" id="stat-total-change"></p>
+          </article>
+        </div>
+
+        <article class="card chart-card">
+          <div class="card__header">
+            <h2 class="card__title" id="evolution-title">Evolução</h2>
+            <div class="range-filter" role="group" aria-label="Período do gráfico" id="evolution-range">
+              <button class="range-filter__option" type="button" data-days="7" aria-pressed="false">7 dias</button>
+              <button class="range-filter__option" type="button" data-days="30" aria-pressed="false">30 dias</button>
+              <button class="range-filter__option" type="button" data-days="" aria-pressed="true">Tudo</button>
+            </div>
+          </div>
+          <div class="chart-box" id="evolution-box"><canvas id="evolution-chart"></canvas></div>
+          <p class="empty-note" id="evolution-empty" hidden>Nenhuma resolução neste período. Faça algumas para ver sua evolução.</p>
+        </article>
+
+        <article class="card stages-card">
+          <h2 class="card__title">Onde você perde mais tempo</h2>
+          <div id="stage-bars"></div>
+        </article>
+
+        <article class="card solves-card">
+          <div class="card__header">
+            <h2 class="card__title" id="solves-title">Últimas resoluções</h2>
+            <button class="btn btn--secondary" type="button" id="export-csv">Exportar CSV</button>
+          </div>
+          <div class="table-scroll" tabindex="0" role="region" aria-labelledby="solves-title">
+            <table class="solves-table">
+              <thead>
+                <tr>
+                  <th scope="col">Tempo</th>
+                  <th scope="col">Parciais <span class="solves-table__hint">(cruz · 1ª · 2ª · última)</span></th>
+                  <th scope="col">Data</th>
+                  <th scope="col"><span class="sr-only">Ações</span></th>
+                </tr>
+              </thead>
+              <tbody id="solves-body"></tbody>
+            </table>
+          </div>
+          <p class="empty-note" id="solves-empty" hidden>Suas resoluções vão aparecer aqui.</p>
+          <p class="card__placeholder" id="solves-count" hidden></p>
         </article>
       </section>
     </main>

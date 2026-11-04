@@ -23,7 +23,7 @@ export default defineConfig({
     rolldownOptions: { plugins: [cubejsThisFix()] },
   },
   build: {
-    chunkSizeWarningLimit: 700, // o Three.js sozinho passa do limite padrão
+    chunkSizeWarningLimit: 800, // Three.js e Chart.js juntos passam do limite padrão
   },
   test: {
     include: ['tests/**/*.test.js'],

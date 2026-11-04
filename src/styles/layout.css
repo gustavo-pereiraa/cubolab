@@ -118,15 +118,6 @@
   font-size: 0.875rem;
 }
 
-.timer-preview {
-  margin: 16px 0;
-  font-family: var(--font-mono);
-  font-size: clamp(3rem, 12vw, 6rem);
-  font-weight: 700;
-  line-height: 1.1;
-  text-align: center;
-}
-
 /* Em telas menores, as colunas empilham */
 @media (max-width: 1099px) {
   .panel--resolver {
