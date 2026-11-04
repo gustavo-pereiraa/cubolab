@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Aprenda a resolver o cubo mágico 3x3 passo a passo e acompanhe sua evolução." />
+    <meta name="theme-color" content="#0D1526" />
+    <title>CuboLab</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap"
+    />
+  </head>
+  <body>
+    <header class="app-header">
+      <div class="app-header__inner">
+        <div class="brand">
+          <span class="brand__cube" aria-hidden="true">
+            <i style="--c: var(--cube-yellow)"></i>
+            <i style="--c: var(--cube-blue)"></i>
+            <i style="--c: var(--cube-red)"></i>
+            <i style="--c: var(--cube-green)"></i>
+            <i style="--c: var(--cube-white)"></i>
+            <i style="--c: var(--cube-orange)"></i>
+            <i style="--c: var(--cube-red)"></i>
+            <i style="--c: var(--cube-yellow)"></i>
+            <i style="--c: var(--cube-blue)"></i>
+          </span>
+          <div>
+            <h1 class="brand__name">CuboLab</h1>
+            <p class="brand__tagline">Aprenda a resolver o cubo mágico</p>
+          </div>
+        </div>
+
+        <nav class="tabs" role="tablist" aria-label="Seções do CuboLab">
+          <button class="tab" type="button" role="tab" id="tab-resolver" aria-controls="panel-resolver" data-hash="resolver">
+            Resolver
+          </button>
+          <button class="tab" type="button" role="tab" id="tab-treino" aria-controls="panel-treino" data-hash="treino">
+            Treino e estatísticas
+          </button>
+        </nav>
+      </div>
+    </header>
+
+    <main class="app-main">
+      <section class="panel panel--resolver" role="tabpanel" id="panel-resolver" aria-labelledby="tab-resolver" tabindex="0">
+        <article class="card">
+          <h2 class="card__title">1. Informe as cores do seu cubo</h2>
+          <p class="card__placeholder">O cubo aberto para pintar chega na fase 2.</p>
+        </article>
+        <article class="card">
+          <h2 class="card__title">2. Siga os movimentos</h2>
+          <p class="card__placeholder">O cubo 3D e o player de movimentos chegam na fase 2.</p>
+        </article>
+        <article class="card">
+          <h2 class="card__title">Método</h2>
+          <p class="card__placeholder">O seletor de método e as etapas chegam nas fases 2 e 3.</p>
+        </article>
+      </section>
+
+      <section class="panel panel--treino" role="tabpanel" id="panel-treino" aria-labelledby="tab-treino" tabindex="0" hidden>
+        <article class="card">
+          <h2 class="card__title">Cronômetro</h2>
+          <p class="timer-preview" aria-hidden="true">0.00</p>
+          <p class="card__placeholder">O cronômetro e as estatísticas chegam na fase 5.</p>
+        </article>
+      </section>
+    </main>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
