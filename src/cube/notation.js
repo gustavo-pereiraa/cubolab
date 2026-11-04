@@ -37,4 +37,20 @@ export function invertSequence(moves) {
   return moves.map(invertMove).reverse();
 }
 
+/** Junta giros seguidos da mesma face: "R R" vira "R2" e "R R′" desaparece. */
+export function simplifyMoves(moves) {
+  const result = [];
+  for (const { face, turns } of moves) {
+    const last = result.at(-1);
+    if (last?.face !== face) {
+      result.push({ face, turns });
+      continue;
+    }
+    const total = (last.turns + turns) % 4;
+    if (total === 0) result.pop();
+    else result[result.length - 1] = { face, turns: total };
+  }
+  return result;
+}
+
 export const ALL_MOVES = FACES.flatMap((face) => [1, 2, 3].map((turns) => ({ face, turns })));

@@ -1,4 +1,4 @@
-import { FACES, FACE_NORMALS, STICKERS } from './state.js';
+import { FACES, FACE_NORMALS, STICKERS, stickerIndexAt } from './state.js';
 import { parseSequence } from './notation.js';
 
 const dot = (a, b) => a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
@@ -10,9 +10,6 @@ function rotateClockwise(vector, axis) {
   return cross(vector, axis).map((value, i) => value + axis[i] * along);
 }
 
-const stickerKey = (position, normal) => `${position}|${normal}`;
-const indexByKey = new Map(STICKERS.map((s, index) => [stickerKey(s.position, s.normal), index]));
-
 /**
  * Permutação de um quarto de volta horário, derivada da geometria do cubo:
  * targets[i] é o índice para onde o adesivo i vai.
@@ -21,7 +18,7 @@ function buildQuarterTurn(face) {
   const axis = FACE_NORMALS[face];
   return STICKERS.map((sticker, index) => {
     if (dot(sticker.position, axis) !== 1) return index;
-    return indexByKey.get(stickerKey(rotateClockwise(sticker.position, axis), rotateClockwise(sticker.normal, axis)));
+    return stickerIndexAt(rotateClockwise(sticker.position, axis), rotateClockwise(sticker.normal, axis));
   });
 }
 

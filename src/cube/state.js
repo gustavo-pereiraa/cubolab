@@ -47,6 +47,14 @@ export const STICKERS = FACES.flatMap((face) =>
   })),
 );
 
+const stickerKey = (position, normal) => `${position}|${normal}`;
+const indexByKey = new Map(STICKERS.map((s, index) => [stickerKey(s.position, s.normal), index]));
+
+/** Índice do adesivo em uma posição 3D, olhando na direção da normal. */
+export function stickerIndexAt(position, normal) {
+  return indexByKey.get(stickerKey(position, normal));
+}
+
 export function createSolvedState() {
   return STICKERS.map((sticker) => sticker.face);
 }

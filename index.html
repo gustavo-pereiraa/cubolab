@@ -64,9 +64,10 @@
         <article class="card">
           <h2 class="card__title">2. Siga os movimentos</h2>
           <div class="cube-view" id="cube-view"></div>
-          <div aria-live="polite">
+          <div class="step-text" aria-live="polite">
             <p class="step-title" id="step-title"></p>
             <p class="step-instruction" id="step-instruction"></p>
+            <p class="step-move" id="step-move" hidden></p>
           </div>
           <ol class="chips" id="move-chips" aria-label="Sequência de movimentos"></ol>
           <div class="player-controls">
@@ -90,7 +91,7 @@
           </div>
           <p class="notation-legend">
             <code>R U F L D B</code> são as faces direita, cima, frente, esquerda, baixo e trás. A letra sozinha é um giro
-            horário, <code>′</code> é anti-horário e <code>2</code> é meia volta.
+            horário, <code>′</code> é anti-horário e <code>2</code> é meia volta. Mantenha o cubo sempre na mesma posição.
           </p>
         </article>
 
@@ -99,18 +100,28 @@
             <h2 class="card__title" id="method-title">Método</h2>
             <fieldset class="method-options" aria-labelledby="method-title">
               <label class="method-option">
-                <input type="radio" name="method" value="beginner" disabled />
-                Iniciante (camadas), em breve
+                <input type="radio" name="method" value="beginner" checked />
+                Iniciante (camadas)
               </label>
               <label class="method-option">
-                <input type="radio" name="method" value="shortest" checked />
+                <input type="radio" name="method" value="shortest" />
                 Mais curta (Kociemba)
               </label>
             </fieldset>
           </article>
+          <article class="card" id="stages-card">
+            <h2 class="card__title">Etapas do método iniciante</h2>
+            <p class="card__placeholder" id="stages-note" hidden>A solução mais curta não passa por essas etapas.</p>
+            <ol class="stage-list" id="stage-list"></ol>
+          </article>
           <article class="card">
             <h2 class="card__title">Comparando os métodos</h2>
-            <p class="card__placeholder">Movimentos para o embaralhamento atual.</p>
+            <p class="card__placeholder" id="compare-summary" aria-live="polite">Movimentos para o embaralhamento atual.</p>
+            <div class="compare-row">
+              <span>Iniciante</span>
+              <span class="compare-row__value" id="beginner-count">–</span>
+              <div class="compare-row__track"><div class="compare-row__bar" id="beginner-bar"></div></div>
+            </div>
             <div class="compare-row">
               <span>Mais curta</span>
               <span class="compare-row__value" id="shortest-count">–</span>
