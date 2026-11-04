@@ -1,0 +1,363 @@
+.card__hint {
+  margin-bottom: 16px;
+  color: var(--text-muted);
+  font-size: 0.875rem;
+}
+
+/* Cubo aberto em cruz */
+.net {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-areas:
+    '. U . .'
+    'L F R B'
+    '. D . .';
+  gap: 4px;
+}
+
+.net__face--U { grid-area: U; }
+.net__face--L { grid-area: L; }
+.net__face--F { grid-area: F; }
+.net__face--R { grid-area: R; }
+.net__face--B { grid-area: B; }
+.net__face--D { grid-area: D; }
+
+.net__label {
+  display: block;
+  margin-bottom: 2px;
+  color: var(--text-muted);
+  font-size: 0.6875rem;
+  line-height: 1.3;
+  text-align: center;
+}
+
+.net__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+/* O botão ocupa a célula inteira e a cor fica dentro, para não haver vãos sem clique. */
+.sticker {
+  position: relative;
+  aspect-ratio: 1;
+  padding: 1.5px;
+  background: var(--c) content-box;
+  border: 0;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.sticker:hover:not(:disabled) {
+  filter: brightness(1.15);
+}
+
+.sticker:focus-visible {
+  z-index: 1;
+  outline-offset: 0;
+}
+
+.sticker--center {
+  cursor: default;
+}
+
+.sticker--center::after {
+  content: '';
+  position: absolute;
+  inset: 34%;
+  background: #0b122066;
+  border-radius: 50%;
+}
+
+.sticker.is-invalid {
+  z-index: 1;
+  outline: 3px solid var(--warning);
+  outline-offset: -1px;
+  box-shadow: inset 0 0 0 4px var(--bg); /* separa o contorno de adesivos também laranja */
+}
+
+/* Paleta */
+.palette {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.swatch {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: var(--target-min);
+  padding: 4px 8px;
+  background: var(--button-secondary);
+  border: 1px solid var(--button-secondary-border);
+  border-radius: var(--radius-button);
+  cursor: pointer;
+  text-align: left;
+}
+
+.swatch[aria-pressed='true'] {
+  border-color: var(--accent);
+  box-shadow: inset 0 0 0 1px var(--accent);
+}
+
+.swatch__color {
+  flex: none;
+  width: 18px;
+  height: 18px;
+  background: var(--c);
+  border-radius: 5px;
+}
+
+.swatch__text {
+  display: grid;
+  min-width: 0;
+  line-height: 1.2;
+}
+
+.swatch__name {
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.swatch__count {
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+}
+
+.swatch.is-off-count .swatch__count {
+  color: #ff9a5c;
+  font-weight: 700;
+}
+
+.resolver-actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.resolver-actions .btn {
+  padding: 0 8px;
+}
+
+.resolver-actions .btn--primary {
+  grid-column: 1 / -1;
+}
+
+.feedback {
+  margin-top: 12px;
+  padding: 10px 12px;
+  background: #f76b151a;
+  border: 1px solid var(--warning);
+  border-radius: var(--radius-button);
+  color: var(--text);
+  font-size: 0.875rem;
+}
+
+.feedback ul {
+  display: grid;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Cubo 3D */
+.cube-view {
+  height: clamp(280px, 42vh, 420px);
+  cursor: grab;
+}
+
+.cube-view:active {
+  cursor: grabbing;
+}
+
+.cube-view canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.cube-view__fallback {
+  padding: 24px;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+.step-title {
+  margin-top: 8px;
+  font-weight: 600;
+}
+
+.step-title.is-done {
+  color: var(--success);
+}
+
+.step-instruction {
+  min-height: 3em;
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+}
+
+/* Chips de movimentos */
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  position: relative;
+  max-height: 124px;
+  margin: 8px 0 0;
+  padding: 0;
+  overflow-y: auto;
+  list-style: none;
+}
+
+.chip {
+  min-width: 36px;
+  padding: 4px 8px;
+  background: var(--button-secondary);
+  border: 1px solid var(--button-secondary-border);
+  border-radius: 8px;
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-align: center;
+}
+
+.chip.is-done {
+  background: transparent;
+  border-color: var(--border);
+  color: var(--text-muted);
+}
+
+.chip.is-current {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--on-accent);
+  font-weight: 700;
+}
+
+/* Controles */
+.player-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 16px;
+  margin-top: 16px;
+}
+
+.player-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.player-play .icon-pause { display: none; }
+.player-play.is-playing .icon-play { display: none; }
+.player-play.is-playing .icon-pause { display: block; }
+
+.player-speed {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: 8px;
+  min-width: 180px;
+  min-height: var(--target-min);
+  color: var(--text-muted);
+  font-size: 0.875rem;
+}
+
+.player-speed input {
+  flex: 1;
+  min-width: 60px;
+  accent-color: var(--accent);
+}
+
+.player-speed output {
+  min-width: 3.5ch;
+  color: var(--text);
+  font-family: var(--font-mono);
+}
+
+.notation-legend {
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+  color: var(--text-muted);
+  font-size: 0.8125rem;
+}
+
+.notation-legend code {
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+}
+
+/* Coluna direita */
+.side-column {
+  display: grid;
+  gap: 20px;
+  min-width: 0;
+}
+
+.method-options {
+  display: grid;
+  gap: 8px;
+  margin: 8px 0 0;
+  padding: 0;
+  border: 0;
+}
+
+.method-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: var(--target-min);
+  padding: 8px 12px;
+  background: var(--button-secondary);
+  border: 1px solid var(--button-secondary-border);
+  border-radius: var(--radius-button);
+  cursor: pointer;
+}
+
+.method-option:has(input:checked) {
+  border-color: var(--accent);
+}
+
+.method-option:has(input:disabled) {
+  color: var(--text-muted);
+  cursor: not-allowed;
+}
+
+.method-option input {
+  accent-color: var(--accent);
+}
+
+.compare-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 4px 12px;
+  margin-top: 12px;
+  font-size: 0.875rem;
+}
+
+.compare-row__value {
+  font-family: var(--font-mono);
+  font-weight: 700;
+}
+
+.compare-row__track {
+  grid-column: 1 / -1;
+  height: 8px;
+  background: var(--button-secondary);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.compare-row__bar {
+  width: 0;
+  height: 100%;
+  background: var(--accent);
+  border-radius: 4px;
+  transition: width 240ms ease;
+}

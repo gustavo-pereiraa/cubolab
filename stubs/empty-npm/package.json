@@ -1,0 +1,6 @@
+{
+  "name": "npm",
+  "version": "6.0.0",
+  "private": true,
+  "description": "Pacote vazio. A cubejs declara o npm como dependência sem nunca importá-lo; este substituto evita instalar o npm inteiro e seus alertas de segurança."
+}

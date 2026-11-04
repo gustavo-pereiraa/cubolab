@@ -50,16 +50,74 @@
       <section class="panel panel--resolver" role="tabpanel" id="panel-resolver" aria-labelledby="tab-resolver" tabindex="0">
         <article class="card">
           <h2 class="card__title">1. Informe as cores do seu cubo</h2>
-          <p class="card__placeholder">O cubo aberto para pintar chega na fase 2.</p>
+          <p class="card__hint">Segure o cubo com amarelo em cima e verde na frente. Escolha uma cor e clique nos quadradinhos.</p>
+          <div class="net" id="net"></div>
+          <div class="palette" id="palette" role="group" aria-label="Cor para pintar"></div>
+          <div class="resolver-actions">
+            <button class="btn btn--secondary" type="button" id="scramble-button">Embaralhar</button>
+            <button class="btn btn--secondary" type="button" disabled title="Disponível em breve">Ler pela câmera</button>
+            <button class="btn btn--primary" type="button" id="solve-button">Resolver meu cubo</button>
+          </div>
+          <div class="feedback" id="solve-feedback" role="alert" hidden></div>
         </article>
+
         <article class="card">
           <h2 class="card__title">2. Siga os movimentos</h2>
-          <p class="card__placeholder">O cubo 3D e o player de movimentos chegam na fase 2.</p>
+          <div class="cube-view" id="cube-view"></div>
+          <div aria-live="polite">
+            <p class="step-title" id="step-title"></p>
+            <p class="step-instruction" id="step-instruction"></p>
+          </div>
+          <ol class="chips" id="move-chips" aria-label="Sequência de movimentos"></ol>
+          <div class="player-controls">
+            <div class="player-buttons">
+              <button class="btn btn--secondary btn--icon" type="button" id="player-previous" aria-label="Movimento anterior">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5h2.5v14H6zM19 5.5v13L9.5 12z" /></svg>
+              </button>
+              <button class="btn btn--primary btn--icon player-play" type="button" id="player-play" aria-label="Reproduzir">
+                <svg class="icon-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15L20 12z" /></svg>
+                <svg class="icon-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 5H10v14H6.5zM14 5h3.5v14H14z" /></svg>
+              </button>
+              <button class="btn btn--secondary btn--icon" type="button" id="player-next" aria-label="Próximo movimento">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15.5 5H18v14h-2.5zM5 5.5v13l9.5-6.5z" /></svg>
+              </button>
+            </div>
+            <label class="player-speed">
+              Velocidade
+              <input type="range" id="player-speed" min="0.5" max="3" step="0.25" value="1" />
+              <output id="player-speed-output" for="player-speed">1×</output>
+            </label>
+          </div>
+          <p class="notation-legend">
+            <code>R U F L D B</code> são as faces direita, cima, frente, esquerda, baixo e trás. A letra sozinha é um giro
+            horário, <code>′</code> é anti-horário e <code>2</code> é meia volta.
+          </p>
         </article>
-        <article class="card">
-          <h2 class="card__title">Método</h2>
-          <p class="card__placeholder">O seletor de método e as etapas chegam nas fases 2 e 3.</p>
-        </article>
+
+        <div class="side-column">
+          <article class="card">
+            <h2 class="card__title" id="method-title">Método</h2>
+            <fieldset class="method-options" aria-labelledby="method-title">
+              <label class="method-option">
+                <input type="radio" name="method" value="beginner" disabled />
+                Iniciante (camadas), em breve
+              </label>
+              <label class="method-option">
+                <input type="radio" name="method" value="shortest" checked />
+                Mais curta (Kociemba)
+              </label>
+            </fieldset>
+          </article>
+          <article class="card">
+            <h2 class="card__title">Comparando os métodos</h2>
+            <p class="card__placeholder">Movimentos para o embaralhamento atual.</p>
+            <div class="compare-row">
+              <span>Mais curta</span>
+              <span class="compare-row__value" id="shortest-count">–</span>
+              <div class="compare-row__track"><div class="compare-row__bar" id="shortest-bar"></div></div>
+            </div>
+          </article>
+        </div>
       </section>
 
       <section class="panel panel--treino" role="tabpanel" id="panel-treino" aria-labelledby="tab-treino" tabindex="0" hidden>
